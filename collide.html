@@ -60,7 +60,7 @@
          
          for (i = 0; i < ballvec.length; i++)
          {
-            if (isInBall(ballvec[i], x, y))
+            if (ballvec[i].hasPoint(x, y))
             {
                ballvec[i].Dx = -(ballvec[i].Dx * 1.15);
                ballvec[i].Dy = -(ballvec[i].Dy * 1.15);
@@ -80,8 +80,8 @@
          
          for (i = 0; i < ballvec.length; i++)
          {
-            drawBall(ballvec[i]);
-            moveBall(ballvec[i]);
+            ballvec[i].move();
+            ballvec[i].draw();
             lblCollisions.innerHTML = collisions;
          }
       }
@@ -96,36 +96,33 @@
          ball.Dx = randomize(-maxInitSpeed, maxInitSpeed);
          ball.Dy = randomize(-maxInitSpeed, maxInitSpeed);
          ball.color = '#ffff00';
-      }
-      
-      function drawBall(ball)
-      {
-         context.fillStyle = ball.color;
-         context.fillRect(ball.X, ball.Y, ball.W, ball.H);
-      }
-      
-      function moveBall(ball)
-      {
-         if (ball.X + ball.W + ball.Dx >= screen.width || ball.X <= 0)
+         ball.draw = function()
          {
-            ball.Dx = -ball.Dx;
-            collisions++;
+            context.fillStyle = ball.color;
+            context.fillRect(ball.X, ball.Y, ball.W, ball.H);
          }
-         
-         if (ball.Y + ball.H + ball.Dy >= screen.height || ball.Y <= 0)
+         ball.move = function()
          {
-            ball.Dy = -ball.Dy;
-            collisions++;
+            if (ball.X + ball.W + ball.Dx >= screen.width || ball.X <= 0)
+            {
+               ball.Dx = -ball.Dx;
+               collisions++;
+            }
+            
+            if (ball.Y + ball.H + ball.Dy >= screen.height || ball.Y <= 0)
+            {
+               ball.Dy = -ball.Dy;
+               collisions++;
+            }
+            
+            ball.X += ball.Dx;
+            ball.Y += ball.Dy;
          }
-         
-         ball.X += ball.Dx;
-         ball.Y += ball.Dy;
-      }
-      
-      function isInBall(ball, x, y)
-      {
-         return (x >= ball.X && x <= ball.X + ball.W) &&
+         ball.hasPoint = function(x, y)
+         {
+            return (x >= ball.X && x <= ball.X + ball.W) &&
                 (y >= ball.Y && y <= ball.Y + ball.H);
+         }
       }
       
       function randomize(minimum, maximum)
