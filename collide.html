@@ -5,7 +5,7 @@
    <body style="color: #ffffff; background-color: #000000">
       <p id="p">
          <canvas id="gc" width="500" height="500"
-          style="border: 1px solid white" onmousedown="clickBall(event)">
+          style="border: 1px solid white" onmousedown="ballClick(event)">
             Your browser does not support the HTML5
             <code>canvas</code> element.   
          </canvas>
@@ -51,23 +51,6 @@
          );
       }
       
-      function clickBall(event)
-      {
-         var x = event.clientX - boundRect.left;
-         var y = event.clientY - boundRect.top;
-         
-         console.log('mouseclick @ (' + x + ', ' + y + ')');
-         
-         for (i = 0; i < ballvec.length; i++)
-         {
-            if (ballvec[i].hasPoint(x, y))
-            {
-               ballvec[i].Dx = -(ballvec[i].Dx * 1.15);
-               ballvec[i].Dy = -(ballvec[i].Dy * 1.15);
-            }
-         }
-      }
-      
       function getDOM(id)
       {
          return document.getElementById(id);
@@ -80,8 +63,8 @@
          
          for (i = 0; i < ballvec.length; i++)
          {
-            ballvec[i].move();
-            ballvec[i].draw();
+            ballMove(ballvec[i]);
+            ballDraw(ballvec[i]);
             lblCollisions.innerHTML = collisions;
          }
       }
@@ -96,32 +79,52 @@
          ball.Dx = randomize(-maxInitSpeed, maxInitSpeed);
          ball.Dy = randomize(-maxInitSpeed, maxInitSpeed);
          ball.color = '#ffff00';
-         ball.draw = function()
+      }
+      
+      function ballDraw(ball)
+      {
+         context.fillStyle = ball.color;
+         context.fillRect(ball.X, ball.Y, ball.W, ball.H);
+      }
+      
+      function ballMove(ball)
+      {
+         if (ball.X + ball.W + ball.Dx >= screen.width || ball.X <= 0)
          {
-            context.fillStyle = ball.color;
-            context.fillRect(ball.X, ball.Y, ball.W, ball.H);
+            ball.Dx = -ball.Dx;
+            collisions++;
          }
-         ball.move = function()
+         
+         if (ball.Y + ball.H + ball.Dy >= screen.height || ball.Y <= 0)
          {
-            if (ball.X + ball.W + ball.Dx >= screen.width || ball.X <= 0)
-            {
-               ball.Dx = -ball.Dx;
-               collisions++;
-            }
-            
-            if (ball.Y + ball.H + ball.Dy >= screen.height || ball.Y <= 0)
-            {
-               ball.Dy = -ball.Dy;
-               collisions++;
-            }
-            
-            ball.X += ball.Dx;
-            ball.Y += ball.Dy;
+            ball.Dy = -ball.Dy;
+            collisions++;
          }
-         ball.hasPoint = function(x, y)
-         {
-            return (x >= ball.X && x <= ball.X + ball.W) &&
+         
+         ball.X += ball.Dx;
+         ball.Y += ball.Dy;
+      }
+      
+      function hasPoint(ball, x, y)
+      {
+         return (x >= ball.X && x <= ball.X + ball.W) &&
                 (y >= ball.Y && y <= ball.Y + ball.H);
+      }
+      
+      function ballClick(event)
+      {
+         var x = event.clientX - boundRect.left;
+         var y = event.clientY - boundRect.top;
+         
+         console.log('mouseclick @ (' + x + ', ' + y + ')');
+         
+         for (i = 0; i < ballvec.length; i++)
+         {
+            if (hasPoint(ballvec[i], x, y))
+            {
+               ballvec[i].Dx = -(ballvec[i].Dx * 1.15);
+               ballvec[i].Dy = -(ballvec[i].Dy * 1.15);
+            }
          }
       }
       
