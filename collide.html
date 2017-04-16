@@ -62,8 +62,8 @@
          {
             if (isInBall(ballvec[i], x, y))
             {
-               ballvec[i].Dx = -ballvec[i].Dx;
-               ballvec[i].Dy = -ballvec[i].Dy;
+               ballvec[i].Dx = -(ballvec[i].Dx * 1.15);
+               ballvec[i].Dy = -(ballvec[i].Dy * 1.15);
             }
          }
       }
@@ -88,13 +88,13 @@
       
       function initBall(ball)
       {
-         maxSpeed = 2;
+         maxInitSpeed = 0.5;
          ball.W = 15;
          ball.H = 15;
-         ball.X = randomize(0, screen.width - ball.W);
-         ball.Y = randomize(0, screen.height - ball.H);
-         ball.Dx = randomize(-maxSpeed, maxSpeed);
-         ball.Dy = randomize(-maxSpeed, maxSpeed);
+         ball.X = randomize(0, screen.width - ball.W - 1);
+         ball.Y = randomize(0, screen.height - ball.H - 1);
+         ball.Dx = randomize(-maxInitSpeed, maxInitSpeed);
+         ball.Dy = randomize(-maxInitSpeed, maxInitSpeed);
          ball.color = '#ffff00';
       }
       
@@ -130,7 +130,7 @@
       
       function randomize(minimum, maximum)
       {
-         return Math.random() * (maximum - minimum + 1) + minimum;
+         return Math.random() * (maximum - minimum) + minimum;
       }
    </script>
 </html>
