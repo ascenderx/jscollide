@@ -17,7 +17,7 @@
          var canvas;
          var context;
          var boundRect;
-         var screen = {};
+         var screenObj = {};
          var ballvec = [];
          var lblCollisions = getDOM('lblCollisions');
          var collisions = 0;
@@ -29,9 +29,9 @@
             canvas = getDOM('gc');
             context = canvas.getContext('2d');
             boundRect = canvas.getBoundingClientRect();
-            screen.fps = 60;
-            screen.width = canvas.width;
-            screen.height = canvas.height;
+            screenObj.fps = 60;
+            screenObj.width = canvas.width;
+            screenObj.height = canvas.height;
             
             for (i = 0; i < ballCount; i++)
             {
@@ -40,7 +40,7 @@
                ballvec.push(ball);
             }
             
-            setInterval(draw, 1000/screen.fps);
+            setInterval(draw, 1000/screenObj.fps);
          }
          
          window.onresize = function()
@@ -59,7 +59,7 @@
          function draw()
          {
             context.fillStyle = '#000000';
-            context.fillRect(0, 0, screen.width, screen.height);
+            context.fillRect(0, 0, screenObj.width, screenObj.height);
             
             for (i = 0; i < ballvec.length; i++)
             {
@@ -74,8 +74,8 @@
             maxInitSpeed = 1.0;
             ball.W = 15;
             ball.H = 15;
-            ball.X = randomize(0, screen.width - ball.W - 1);
-            ball.Y = randomize(0, screen.height - ball.H - 1);
+            ball.X = randomize(0, screenObj.width - ball.W - 1);
+            ball.Y = randomize(0, screenObj.height - ball.H - 1);
             ball.Dx = randomize(-maxInitSpeed, maxInitSpeed);
             ball.Dy = randomize(-maxInitSpeed, maxInitSpeed);
             ball.color = '#ffff00';
@@ -89,13 +89,13 @@
          
          function ballMove(ball)
          {
-            if (ball.X + ball.W + ball.Dx >= screen.width || ball.X <= 0)
+            if (ball.X + ball.W + ball.Dx >= screenObj.width || ball.X <= 0)
             {
                ball.Dx = -ball.Dx;
                collisions++;
             }
             
-            if (ball.Y + ball.H + ball.Dy >= screen.height || ball.Y <= 0)
+            if (ball.Y + ball.H + ball.Dy >= screenObj.height || ball.Y <= 0)
             {
                ball.Dy = -ball.Dy;
                collisions++;
