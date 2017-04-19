@@ -6,40 +6,37 @@ var lblCollisions;
 var collisions;
 var clicked;
 var mousePos;
+var ballCount;
+var fps;
+var maxBallDim;
+var maxInitVel;
 
 function main()
 {
    getDOM('p').style.textAlign = 'center';
    
-   ctx = canvas.getContext('2d');;
+   ctx = canvas.getContext('2d');
+   canvas.width = window.innerWidth - 100;
+   canvas.height = window.innerHeight - 100;
    boundRect = canvas.getBoundingClientRect();
    ballvec = [];
    lblCollisions = getDOM('lblCollisions');
    collisions = 0;
    clicked = false;
    mousePos = null;
-   
-   var ballCount = 10;
-   var fps = 60;
-   var maxBallDim = 15;
-   var maxInitVel = 2;
+   ballCount = 10;
+   fps = 60;
+   maxBallDim = 15;
+   maxInitVel = 2;
    
    // Initialize the ball objects
    for (i = 0; i < ballCount; i++)
    {
-      var x = randomize(0, canvas.width - maxBallDim - 1);
-      var y = randomize(0, canvas.height - maxBallDim - 1);
-      var pt = new Point(x, y);
-      
-      var dx = randomize(-maxInitVel, maxInitVel);
-      var dy = randomize(-maxInitVel, maxInitVel);
-      var vel = new Velocity(dx, dy);
-      
+      var pt = genPointOnCanvas();
+      var vel = genVelocity();
       var w = h = maxBallDim;
       var dim = new Dimensions(w, h);
-      
       var color = "#00ffff";
-      
       var ball = new Ball(ctx, dim, pt, vel, color)
       
       ballvec.push(ball);
@@ -73,6 +70,20 @@ function randomize(minimum, maximum)
    return Math.random() * (maximum - minimum) + minimum;
 }
 
+function genPointOnCanvas()
+{
+   var x = randomize(0, canvas.width - maxBallDim - 1);
+   var y = randomize(0, canvas.height - maxBallDim - 1);
+   return new Point(x, y);
+}
+
+function genVelocity()
+{
+   var dx = randomize(-maxInitVel, maxInitVel);
+   var dy = randomize(-maxInitVel, maxInitVel);
+   return new Velocity(dx, dy);
+}
+
 function detectCollisions(ball)
 {
    if (ball.pos.x + ball.dim.w + ball.vel.dx >= canvas.width ||
@@ -95,9 +106,27 @@ function getDOM(id)
    return document.getElementById(id);
 }
 
+function repositionObjects()
+{
+   for (i = 0; i < ballvec.length; i++)
+   {
+      if (!isOnScreen(ballvec[i]))
+         ballvec[i].pos = genPointOnCanvas();
+   }
+}
+
+function isOnScreen(ball)
+{
+   return ball.pos.x >= 0 && ball.pos.x + ball.dim.w <= canvas.width &&
+          ball.pos.y >= 0 && ball.pos.y + ball.dim.h <= canvas.height;
+}
+
 window.onresize = function()
 {
+   canvas.width = window.innerWidth - 100;
+   canvas.height = window.innerHeight - 100;
    boundRect = canvas.getBoundingClientRect();
+   repositionObjects();
    console.log(
       'canvas @ (' + boundRect.top + ', ' + boundRect.left + ')'
    );
