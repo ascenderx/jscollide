@@ -2,17 +2,23 @@
 <html>
    <head>
       <title>Collisions</title>
+      <meta charset="UTF-8"> 
    </head>
-   <body style="color: #ffffff; background-color: #000000">
+   <body style="color: #ffffff; background-color: #000000" onload="main()">
       <p id="p">
          <canvas id="gc" width="500" height="500"
-          style="border: 1px solid white" onmousedown="ballClick(event)">
+          style="border: 1px solid white">
             Your browser does not support the HTML5
             <code>canvas</code> element.   
          </canvas>
          <br />
          Collisions: <label id="lblCollisions" style="color:#00ff00"></label>
       </p>
+      <script src="point.js"></script>
+      <script src="velocity.js"></script>
+      <script src="ball.js"></script>
+      <script src="main.js"></script>
+      <!--
       <script type="text/javascript">
          var canvas;
          var context;
@@ -133,5 +139,6 @@
             return Math.random() * (maximum - minimum) + minimum;
          }
       </script>
+      -->
    </body>
 </html>
