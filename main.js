@@ -13,7 +13,7 @@ var maxInitVel;
 
 function main()
 {
-   getDOM('p').style.textAlign = 'center';
+   getDOM('divCanvas').style.textAlign = 'center';
    
    ctx = canvas.getContext('2d');
    canvas.width = window.innerWidth - 100;
