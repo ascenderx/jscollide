@@ -5,19 +5,20 @@
  * X values increase horizontally rightward.
  * Y values increase vertically downward.
  ****************************************************************************/
-class Point
+
+/*************************************************************************
+ * CONSTRUCTOR
+ * Input:  x   Horizontal position
+ *         y   Vertical position
+ *************************************************************************/
+function Point(x, y)
 {
-   /*************************************************************************
-    * CONSTRUCTOR
-    * Input:  x   Horizontal position
-    *         y   Vertical position
-    *************************************************************************/
-   constructor(x, y)
-   {
-      this.x = x;
-      this.y = y;
-   }
-   
+   this.x = x;
+   this.y = y;
+}
+
+/* Define Point class methods */
+Point.prototype = {
    /*************************************************************************
     * ADD DX
     * This function "moves" the point in the x direction by an amount dx.
@@ -26,10 +27,10 @@ class Point
     * Input:  dx     Change in x
     * Output: <void>
     *************************************************************************/
-   addDx(dx)
+   addDx: function(dx)
    {
       this.x += dx;
-   }
+   },
    
    /*************************************************************************
     * ADD DY
@@ -39,10 +40,10 @@ class Point
     * Input:  dx     Change in x
     * Output: <void>
     *************************************************************************/
-   addDy(dy)
+   addDy: function(dy)
    {
       this.y += dy;
-   }
+   },
    
    /*************************************************************************
     * ADD VELOCITY
@@ -51,28 +52,26 @@ class Point
     * Input:  vel    Velocity object
     * Output: <void>
     *************************************************************************/
-   addVel(vel)
+   addVel: function(vel)
    {
       this.addDx(vel.dx);
       this.addDy(vel.dy);
-   }
-}
+   },
+};
 
 /****************************************************************************
  * DIMENSIONS CLASS
  * This class is a simple structure to store an object's width and height.
  ****************************************************************************/
-class Dimensions
+
+/*************************************************************************
+ * CONSTRUCTOR
+ * Input:  w   Width  (x-direction)
+ *         h   Height (y-direction)
+ *************************************************************************/
+function Dimensions(w, h)
 {
-   /*************************************************************************
-    * CONSTRUCTOR
-    * Input:  w   Width (x-direction)
-    *         h   Height (y-direction)
-    *************************************************************************/
-   constructor(w, h)
-   {
-      this.w = w;
-      this.h = h;
-   }
+   this.w = w;
+   this.h = h;
 }
 

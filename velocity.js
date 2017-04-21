@@ -5,29 +5,29 @@
  * and y values of a Point in that positive is right/down and negative is
  * left/up.
  ****************************************************************************/
-class Velocity
+/*************************************************************************
+ * CONSTRUCTOR
+ * Input:  dx  Dx Horizontal velocity
+ *         dy  Dy Vertical velocity
+ *************************************************************************/
+function Velocity(dx, dy)
 {
-   /*************************************************************************
-    * CONSTRUCTOR
-    * Input:  dx  Dx Horizontal velocity
-    *         dy  Dy Vertical velocity
-    *************************************************************************/
-   constructor(dx, dy)
-   {
-      this.dx = dx;
-      this.dy = dy;
-   }
+   this.dx = dx;
+   this.dy = dy;
+}
    
+/* Define Velocity class methods */
+Velocity.prototype = {
    /*************************************************************************
     * ADD DDX
     * Increase the horizontal velocity by an amount ddx.
     * Input:  ddx   Horizontal acceleration
     * Output: <void>
     *************************************************************************/
-   addDdx(ddx)
+   addDdx: function(ddx)
    {
       this.dx += ddx;
-   }
+   },
    
    /*************************************************************************
     * ADD DDY
@@ -35,9 +35,8 @@ class Velocity
     * Input:  ddy   Vertical acceleration
     * Output: <void>
     *************************************************************************/
-   addDdy(ddy)
+   addDdy: function(ddy)
    {
       this.dy += ddy;
    }
-}
-
+};
