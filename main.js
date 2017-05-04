@@ -23,12 +23,13 @@ function main()
 {
    // Center canvas on the screen (via encasing <p> DOM)
    getDOM('divCanvas').style.textAlign = 'center';
+   getDOM('divCollisions').style.visibility = 'hidden';
    
    // Prepare to draw in 2D
    ctx = canvas.getContext('2d');
    
    // Set canvas dimensions
-   canvas.width = window.innerWidth - 100;
+   canvas.width = window.innerWidth - 10;
    canvas.height = window.innerHeight - 100;
    boundRect = canvas.getBoundingClientRect();
    
@@ -39,7 +40,7 @@ function main()
    clicked = false;
    mousePos = null;
    ballCount = 100;
-   fps = 70;
+   fps = 1000;
    maxBallDim = 15;
    maxInitVel = 2;
    
