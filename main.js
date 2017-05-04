@@ -38,8 +38,8 @@ function main()
    collisions = 0;
    clicked = false;
    mousePos = null;
-   ballCount = 10;
-   fps = 60;
+   ballCount = 100;
+   fps = 70;
    maxBallDim = 15;
    maxInitVel = 2;
    
@@ -50,7 +50,7 @@ function main()
       var vel = genVelocity();
       var w = h = maxBallDim;
       var dim = new Dimensions(w, h);
-      var color = "#00ffff";
+      var color = randomColor();
       var ball = new Ball(ctx, dim, pt, vel, color)
       
       ballvec.push(ball);
@@ -90,19 +90,6 @@ function drawAll()
          clicked = false;
       }
    }
-}
-
-/****************************************************************************
- * RANDOMIZE
- * This function generates a number equal-to-or-greater-than a minimum value
- * and less than a maximum value.
- * Input:  minimum   Min value
- *         maximum   Max value
- * Output: <float>   Random value
- ****************************************************************************/  
-function randomize(minimum, maximum)
-{
-   return Math.random() * (maximum - minimum) + minimum;
 }
 
 /****************************************************************************

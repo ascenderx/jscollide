@@ -1,0 +1,6 @@
+// color.js
+
+function randomColor()
+{
+
+}
